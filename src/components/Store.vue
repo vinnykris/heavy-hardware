@@ -92,7 +92,7 @@ a {
 }
 
 .product-image {
-    height: 100px;
-    width: 100px;
+    height: 300px;
+    width: 300px;
 }
 </style>
