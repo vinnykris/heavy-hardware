@@ -3,7 +3,7 @@
     <div v-for="product in products" :key="product">
         <!-- <div>{{product.title}}</div> -->
         <!-- <div class="product-image"> -->
-            <img class="product-image" :src="product.images[0].src" @click="productDetail(product)"/>
+            <img class="product-image" :src="product.images[0].src" @click="showProductDetail(product)"/>
         <!-- </div> -->
         <div v-if="product.show_detail">
             <product-detail :product="product"/>
@@ -47,7 +47,12 @@ export default {
             //this.filteredProducts = this.products;
 
         },
-        productDetail: function(product) {
+        showProductDetail: function(product) {
+            for (var i = 0; i < this.products.length; i++) {
+                if (this.products[i].id != product.id) {
+                    this.products[i].show_detail = false;
+                }
+            }
             product.show_detail = !product.show_detail;
             console.log(product.title);
         }
@@ -61,6 +66,7 @@ export default {
         client.product.fetchAll().then((products) => {
             // Do something with the products
             this.products = products;
+            console.log(products);
             this.loadProducts();
             this.processProducts();
         }) 
@@ -86,7 +92,7 @@ a {
 }
 
 .product-image {
-    height: 50px;
-    width: 50px;
+    height: 100px;
+    width: 100px;
 }
 </style>
