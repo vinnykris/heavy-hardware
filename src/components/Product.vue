@@ -1,50 +1,55 @@
 <template>
-    <div class="modal">
-        <div class="modal-background">
-            <div>{{product.title}}</div>
+    <transition name="modal-fade">
+        <div class="modal">
+            <div class="modal-background">
+                <div>
+                    {{product.title}}
+                </div>
+                <button
+                    type="button"
+                    class="btn-close"
+                    @click="close"
+                >x
+                </button>
+            </div>
         </div>
-    </div>
+        <!-- <modal name="product-modal" class="modal">{{product.title}}</modal> -->
+    </transition>
 </template>
 
 <script>
 
 import Client from 'shopify-buy'
+// import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 
 export default {
   name: 'Product',
   props: ['product'],
-  data() {
-      return {
+    data() {
+        return {
         // //   filteredProducts: [],
         //   products: [],
-      }
-  },
+        }
+    },
 
-  components: {
-
-  },
-
-  mounted: function () {// When the app is ready load the products
-      //this.loadProducts();
+    components: {
+    // SweetModal,
+	// SweetModalTab
     },
     methods: {
-        loadProducts: function() {
-            //this.filteredProducts = this.products;
-
-        }
-
+        // show () {
+        //     this.$modal.show('product-modal');
+        // },
+        // hide () {
+        //     this.$modal.hide('product-modal');
+        // }
+        close() {
+            this.$emit('close');
+        },
     },
     created: function() {
-        var client = Client.buildClient({
-            domain: 'heavy-hardware.myshopify.com',
-            storefrontAccessToken: '89e44554086e25c2a6834ccd9c5bed3e' // previously apiKey, now deprecated
-        })
-        // Fetch all products in your shop
-        client.product.fetchAll().then((products) => {
-            // Do something with the products
-            this.products = products;
-            this.loadProducts();
-        }) 
+        console.log("product component created");
+        //this.show();
     }
 }
 </script>
@@ -74,7 +79,7 @@ a {
 }
 .modal-background {
     width: 30em;
-    min-height: 1em;
+    min-height: 15em;
     margin-top: -9em;
     margin-left: -15em;
     border: 2px solid #000000;
@@ -89,4 +94,24 @@ a {
 .alignRight {
     text-align: right;
 }
+
+.modal-fade-enter,
+  .modal-fade-leave-active {
+    opacity: 0;
+  }
+
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity .5s ease
+  }
+
+.btn-close {
+    border: none;
+    font-size: 20px;
+    padding: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #4AAE9B;
+    background: transparent;
+  }
 </style>
