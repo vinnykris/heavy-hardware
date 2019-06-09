@@ -1,42 +1,35 @@
 <template>
-    <transition name="modal-fade">
-        <div class="modal">
-            <div class="modal-background">
-                <div>
-                    {{product.title}}
-                </div>
-                <button
-                    type="button"
-                    class="btn-close"
-                    @click="close"
-                >x
-                </button>
-            </div>
-        </div>
-        <!-- <modal name="product-modal" class="modal">{{product.title}}</modal> -->
-    </transition>
+    <div>
+        <sweet-modal icon="success" ref="modal" title="New Modal">Success!
+            <!-- <sweet-button slot="button">That's fine!</sweet-button> -->
+        </sweet-modal>
+    </div>
 </template>
 
 <script>
 
 import Client from 'shopify-buy'
-// import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
+import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 
 export default {
   name: 'Product',
   props: ['product'],
     data() {
         return {
+            modalVisible: false,
         // //   filteredProducts: [],
         //   products: [],
         }
     },
 
     components: {
-    // SweetModal,
-	// SweetModalTab
+        SweetModal,
+        SweetModalTab
     },
     methods: {
+        open: function () {
+            this.$refs.modal.open()
+        },
         // show () {
         //     this.$modal.show('product-modal');
         // },
@@ -50,6 +43,7 @@ export default {
     created: function() {
         console.log("product component created");
         //this.show();
+        // this.open();
     }
 }
 </script>

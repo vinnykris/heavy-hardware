@@ -1,13 +1,8 @@
 <template>
   <div id="app">
     <div v-for="product in products" :key="product">
-        <!-- <div>{{product.title}}</div> -->
-        <!-- <div class="product-image"> -->
-            <img class="product-image" :src="product.images[0].src" @click="showProductDetail(product)"/>
-        <!-- </div> -->
-        <div v-if="product.show_detail">
-            <product-detail :product="product"/>
-        </div>
+        <product-detail :product="product" ref="details"/>
+        <img class="product-image" :src="product.images[0].src" @click="showProductDetail(product, product._idx)"/>
     </div>
     
   </div>
@@ -34,26 +29,30 @@ export default {
   },
 
   mounted: function () {// When the app is ready load the products
-      this.loadProducts();
+      this.processProducts();
     },
     methods: {
         enumerate: function (v) { var k = 0; return v.map(function (e) { e._idx = k++ }) },
         processProducts: function () {
-            this.products.map(function (e) {
-                Vue.set(e, 'show_detail', false);
-            });
+            this.enumerate(this.products);
+            // this.products.map(function (e) {
+            //     Vue.set(e, 'show_detail', false);
+            // });
         },
-        loadProducts: function() {
-            //this.filteredProducts = this.products;
+        // loadProducts: function() {
+        //     //this.filteredProducts = this.products;
 
-        },
-        showProductDetail: function(product) {
-            for (var i = 0; i < this.products.length; i++) {
-                if (this.products[i].id != product.id) {
-                    this.products[i].show_detail = false;
-                }
-            }
-            product.show_detail = !product.show_detail;
+        // },
+        showProductDetail: function(product, index) {
+            // for (var i = 0; i < this.products.length; i++) {
+            //     if (this.products[i].id != product.id) {
+            //         this.products[i].show_detail = false;
+            //     }
+            // }
+            // product.show_detail = !product.show_detail;
+            // if (product.show_detail) {
+                this.$refs.details[index].open();
+            // }
             console.log(product.title);
         }
     },
@@ -67,7 +66,7 @@ export default {
             // Do something with the products
             this.products = products;
             console.log(products);
-            this.loadProducts();
+            // this.loadProducts();
             this.processProducts();
         }) 
     }
