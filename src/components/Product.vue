@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <sweet-modal icon="success" ref="modal" title="New Modal">Success!
-            <!-- <sweet-button slot="button">That's fine!</sweet-button> -->
-        </sweet-modal>
-    </div>
+    <sweet-modal ref=modal>
+      <div id="my-product0"></div>
+      <div id="my-product1"></div>
+      <div id="my-product2"></div>
+      <div id="my-product3"></div>
+      <div id="my-product4"></div>
+    </sweet-modal>
 </template>
 
 <script>
@@ -13,37 +15,47 @@ import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 
 export default {
   name: 'Product',
-  props: ['product'],
+  props: ['product', 'index'],
     data() {
         return {
-            modalVisible: false,
-        // //   filteredProducts: [],
-        //   products: [],
+          componentKey: 0,
         }
     },
 
     components: {
         SweetModal,
-        SweetModalTab
+        SweetModalTab,
     },
     methods: {
-        open: function () {
-            this.$refs.modal.open()
+        open: function (index) {
+
+            // EVENT LISTENER ATTEMPT
+            this.$refs.modal.open();
+            console.log('modal loaded');
+            this.loadData();
+            
         },
-        // show () {
-        //     this.$modal.show('product-modal');
-        // },
-        // hide () {
-        //     this.$modal.hide('product-modal');
-        // }
-        close() {
-            this.$emit('close');
+        loadData: function() {
+          var client = Client.buildClient({
+              domain: 'heavy-hardware.myshopify.com',
+              storefrontAccessToken: '89e44554086e25c2a6834ccd9c5bed3e' // previously apiKey, now deprecated
+          });
+
+          var ui = ShopifyBuy.UI.init(client);
+          console.log(this.product);
+          ui.createComponent('product', {
+              id: this.product.id,
+              node: document.getElementById('my-product' + this.index)
+          });
+          this.$forceUpdate();
+        },
+        forceRerender() {
+          this.componentKey += 1;
+          console.log("force re-render called")
         },
     },
     created: function() {
         console.log("product component created");
-        //this.show();
-        // this.open();
     }
 }
 </script>

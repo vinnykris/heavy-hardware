@@ -9,14 +9,14 @@
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
 import Store from './components/Store.vue'
-import Product from './components/Product.vue';
+// import Product from './components/Product.vue';
 
 export default {
   name: 'app',
   components: {
     //HelloWorld,
     Store,
-    Product
+    // Product
   },
   data () {
     return {
