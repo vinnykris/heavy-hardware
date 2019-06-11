@@ -119,6 +119,12 @@ export default {
                     }
                   }
                 },
+                modalProduct: {
+                  contents: {
+                    img: false,
+                    imgWithCarousel: true,
+                  },
+                },
                 cart: {
                   startOpen: false,
                   iframe: true,
