@@ -106,11 +106,13 @@ export default {
                     img: {
                       'padding': '10px',
                       'display': 'inline',
-                      'text-align': 'center'
+                      'text-align': 'center',
+                      'border-radius': '5px'
                     },
                     productimage: {
                       'display': 'inline',
-                      'text-align': 'center'
+                      'text-align': 'center',
+                      'border-radius': '5px'
                     },
                     product: {
                       'text-align': 'center'
@@ -127,7 +129,9 @@ export default {
 
                   },
                   styles: {
-                    
+                    button: {
+                      'background-color': 'black',
+                    }
                   }
                 }
               }
