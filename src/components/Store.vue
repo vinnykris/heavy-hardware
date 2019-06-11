@@ -72,6 +72,7 @@ export default {
                   buttonDestination: 'modal',
                   isButton: true,
                   iframe: true,
+                  width: 'false',
                   contents: {
                     // image: true,
                     img: true,
@@ -103,7 +104,16 @@ export default {
                     //   'padding': '10px'
                     // }
                     img: {
-                      'padding': '10px'
+                      'padding': '10px',
+                      'display': 'inline',
+                      'text-align': 'center'
+                    },
+                    productimage: {
+                      'display': 'inline',
+                      'text-align': 'center'
+                    },
+                    product: {
+                      'text-align': 'center'
                     }
                   }
                 },
