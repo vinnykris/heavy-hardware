@@ -6,7 +6,7 @@
 <script>
 
 import Client from 'shopify-buy'
-import Product from './Product.vue'
+
 import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 import Vue from 'vue'
 
@@ -14,15 +14,11 @@ export default {
   name: 'Store',
   data() {
       return {
-        //   filteredProducts: [],
-        // client: "",
         products: [],
-          //showDetail: false,
       }
   },
 
   components: {
-      'product-detail': Product,
       SweetModal,
       SweetModalTab,
   },
@@ -34,20 +30,8 @@ export default {
         enumerate: function (v) { var k = 0; return v.map(function (e) { e._idx = k++ }) },
         processProducts: function () {
             this.enumerate(this.products);
-            // this.products.map(function (e) {
-            //     Vue.set(e, 'show_detail', false);
-            // });
         },
-        // loadProducts: function() {
-        //     //this.filteredProducts = this.products;
-
-        // },
         showProductDetail: function(product, index) {
-            // for (var i = 0; i < this.products.length; i++) {
-            //     if (this.products[i].id != product.id) {
-            //         this.$refs.details[i].hide();
-            //     }
-            // }
             this.$refs.details[index].open(index);
             console.log(product.title);
         },
@@ -82,37 +66,6 @@ export default {
                     button: false,
                     description: false,
                   },
-                  templates: {
-                    // image:
-                    //   '<div class="{{data.classes.product.image}}"' +
-                    //     '<img class="{{data.classes.product.productimage}}" :src="{{data.img.src}}"/>' +
-                    //   '</div>',
-                  },
-                  classes: {
-                    // image: 'product-image',
-                  },
-                  styles: {
-                    // image: {
-                    //   'padding': '10px'
-                    // },
-                    // productimage: {
-                    //   'padding': '10px'
-                    // }
-                    img: {
-                      'padding': '10px',
-                      'display': 'inline',
-                      'text-align': 'center',
-                      'border-radius': '5px'
-                    },
-                    productimage: {
-                      'display': 'inline',
-                      'text-align': 'center',
-                      'border-radius': '5px'
-                    },
-                    product: {
-                      'text-align': 'center'
-                    }
-                  }
                 },
                 modal: {
                   styles: {
@@ -137,12 +90,6 @@ export default {
                 cart: {
                   startOpen: false,
                   iframe: true,
-                  templates: {
-
-                  },
-                  classes: {
-
-                  },
                   styles: {
                     button: {
                       'background-color': 'black',
@@ -157,9 +104,8 @@ export default {
     },
     created: function() {
       let productData = require('./data/products.json');
-      console.log(productData.products);
+      // console.log(productData.products);
       this.products = productData.products;
-      // this.processProducts();
       this.setupComponents();
     }
 }
