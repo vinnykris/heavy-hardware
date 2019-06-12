@@ -1,10 +1,5 @@
 <template>
-  <div id="app">
-    <!-- <div v-for="product in products" :key="product">
-        <product-detail :product="product" :index="product._idx" ref="details"/>
-        <img class="product-image" :src="product.image.src" @click="showProductDetail(product, product._idx)"/>
-    </div> -->
-    
+  <div id="app"> 
   </div>
 </template>
 
@@ -119,11 +114,25 @@ export default {
                     }
                   }
                 },
+                modal: {
+                  styles: {
+                    button: {
+                      'background-color': 'black',
+                    }
+                  }
+                },
                 modalProduct: {
                   contents: {
                     img: false,
                     imgWithCarousel: true,
                   },
+                },
+                toggle: {
+                  styles: {
+                    toggle: {
+                      'background-color': 'black',
+                    }
+                  }
                 },
                 cart: {
                   startOpen: false,
