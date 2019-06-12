@@ -1,50 +1,61 @@
 <template>
-    <div class="modal">
-        <div class="modal-background">
-            <div>{{product.title}}</div>
-        </div>
-    </div>
+    <sweet-modal ref=modal>
+      <div id="my-product0"></div>
+      <div id="my-product1"></div>
+      <div id="my-product2"></div>
+      <div id="my-product3"></div>
+      <div id="my-product4"></div>
+    </sweet-modal>
 </template>
 
 <script>
 
 import Client from 'shopify-buy'
+import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 
 export default {
   name: 'Product',
-  props: ['product'],
-  data() {
-      return {
-        // //   filteredProducts: [],
-        //   products: [],
-      }
-  },
+  props: ['product', 'index'],
+    data() {
+        return {
+          componentKey: 0,
+        }
+    },
 
-  components: {
-
-  },
-
-  mounted: function () {// When the app is ready load the products
-      //this.loadProducts();
+    components: {
+        SweetModal,
+        SweetModalTab,
     },
     methods: {
-        loadProducts: function() {
-            //this.filteredProducts = this.products;
+        open: function (index) {
 
-        }
+            // EVENT LISTENER ATTEMPT
+            this.$refs.modal.open();
+            console.log('modal loaded');
+            this.loadData();
+            
+        },
+        loadData: function() {
+          var client = Client.buildClient({
+              domain: 'heavy-hardware.myshopify.com',
+              storefrontAccessToken: '89e44554086e25c2a6834ccd9c5bed3e' // previously apiKey, now deprecated
+          });
 
+          var ui = ShopifyBuy.UI.init(client);
+          console.log(this.product);
+          ui.createComponent('product', {
+              id: this.product.id,
+              node: document.getElementById('my-product' + this.index)
+          });
+          this.$forceUpdate();
+        },
+        forceRerender() {
+          this.componentKey += 1;
+          console.log("force re-render called")
+        },
     },
     created: function() {
-        var client = Client.buildClient({
-            domain: 'heavy-hardware.myshopify.com',
-            storefrontAccessToken: '89e44554086e25c2a6834ccd9c5bed3e' // previously apiKey, now deprecated
-        })
-        // Fetch all products in your shop
-        client.product.fetchAll().then((products) => {
-            // Do something with the products
-            this.products = products;
-            this.loadProducts();
-        }) 
+        console.log("product component created");
     }
 }
 </script>
@@ -74,7 +85,7 @@ a {
 }
 .modal-background {
     width: 30em;
-    min-height: 1em;
+    min-height: 15em;
     margin-top: -9em;
     margin-left: -15em;
     border: 2px solid #000000;
@@ -89,4 +100,24 @@ a {
 .alignRight {
     text-align: right;
 }
+
+.modal-fade-enter,
+  .modal-fade-leave-active {
+    opacity: 0;
+  }
+
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity .5s ease
+  }
+
+.btn-close {
+    border: none;
+    font-size: 20px;
+    padding: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #4AAE9B;
+    background: transparent;
+  }
 </style>
